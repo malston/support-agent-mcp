@@ -1,0 +1,37 @@
+[tool.poetry]
+name = "support-agent-mcp"
+version = "0.1.0"
+description = "CCA Domain 2 build exercise: a support-agent MCP tool surface whose descriptions (not names) route 'check order #12345 status' to the order tool, with structured errors across all four categories."
+authors = ["Mark Alston"]
+readme = "README.md"
+packages = [{include = "support_agent", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.13"
+pydantic = ">=2.0"
+
+[tool.poetry.group.live]
+optional = true
+
+[tool.poetry.group.live.dependencies]
+anthropic = ">=0.42.0"
+python-dotenv = ">=1.0"
+mcp = ">=1.12,<2"
+
+[tool.poetry.group.dev.dependencies]
+pytest = ">=8.0"
+ruff = ">=0.4"
+
+[tool.ruff]
+target-version = "py313"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

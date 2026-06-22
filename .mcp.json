@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "support-agent": {
+      "command": "python",
+      "args": ["-m", "support_agent.server"],
+      "env": {
+        "ORDERS_API_KEY": "${SUPPORT_ORDERS_API_KEY}",
+        "ORDERS_DB_URL": "${SUPPORT_ORDERS_DB_URL}",
+        "REFUND_SIGNING_SECRET": "${SUPPORT_REFUND_SIGNING_SECRET}"
+      }
+    }
+  }
+}
