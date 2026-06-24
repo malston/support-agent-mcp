@@ -23,6 +23,11 @@ import os
 # Each request names one tool unambiguously; `expect` is what the descriptions
 # should route it to, printed alongside the model's actual choice so a mismatch
 # is visible rather than asserted (the model is not deterministic).
+#
+# Expect the refund request to often print [DIFF] -> lookup_order: that is correct,
+# not a misroute. issue_refund's description says to confirm the order exists with
+# lookup_order before an irreversible refund, so the model's first move is to verify.
+# This driver captures only the first tool_use; a full loop would then refund.
 REQUESTS: list[tuple[str, str]] = [
     ("check order #12345 status", "lookup_order"),
     ("what's the email on file for customer cust-1?", "get_customer"),
