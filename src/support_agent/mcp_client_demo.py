@@ -55,8 +55,8 @@ def main() -> None:
     print(f"  isError={call['isError']}  code={call['meta'].get('code')}")
     print(f"  {call['text'][0]}")
     print(
-        "\n  One server, reached by a second client that has no model of its own. "
-        "Claude Code is a third client of the same server -- see the live path."
+        "\n  One server, two clients: this script (no model of its own) and "
+        "Claude Code on the live path -- you wrote neither; both speak the same MCP protocol."
     )
 
 
