@@ -54,10 +54,6 @@ def main() -> None:
     print("\ncall_tool('lookup_order', {'order_id': '12345'}):")
     print(f"  isError={call['isError']}  code={call['meta'].get('code')}")
     print(f"  {call['text'][0]}")
-    print(
-        "\n  One server, two clients: this script (no model of its own) and "
-        "Claude Code on the live path -- you wrote neither; both speak the same MCP protocol."
-    )
 
 
 if __name__ == "__main__":
