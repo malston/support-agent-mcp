@@ -7,16 +7,19 @@ support-agent MCP surface exposes three tools -- an ambiguous read pair
 on, and keeps an **access failure** distinct from a **valid empty result** so the
 agent never lies about what it could not read.
 
-- The design doc this implements: [`../deliverables/domain2-build-exercise.md`](../deliverables/domain2-build-exercise.md)
-- The exercise prompt: [`../.prompts/domain2-build-exercise.prompt.md`](../.prompts/domain2-build-exercise.prompt.md)
+- The design doc this implements: [`./deliverables/domain2-build-exercise.md`](./deliverables/domain2-build-exercise.md)
+- The exercise prompt: [`./.prompts/domain2-build-exercise.prompt.md`](./.prompts/domain2-build-exercise.prompt.md)
 
 ## Quick start
 
 ```bash
-poetry install --with dev
-poetry run pytest                      # NO API key needed
-poetry run python -m support_agent.demo
+make install            # poetry install --with dev (no API key needed)
+make test               # full test suite, no key
+make demo               # offline routing + error demo
 ```
+
+`make help` lists every target. No Make? The commands are `poetry install --with dev`,
+`poetry run pytest`, and `poetry run python -m support_agent.demo`.
 
 The demo runs four sections against the real code:
 
@@ -39,6 +42,26 @@ The demo runs four sections against the real code:
   no fees (valid) isError=False  category=None         retryable=False  code=NO_FEES_ON_RECORD  resolved_basis=0
   fee svc down    isError=True   category=transient    retryable=True   code=FEE_SERVICE_UNREACHABLE  resolved_basis=NONE
 ```
+
+## Optional -- live model + MCP protocol client
+
+The demo above is deterministic and needs no key. Two optional paths exercise the
+real model and the real MCP protocol -- install the live extras first:
+
+```bash
+make install-live       # adds anthropic, mcp, python-dotenv
+cp .env.example .env    # set ANTHROPIC_API_KEY (only the live router needs it)
+
+make live               # live routing: the real model picks the tool via
+                        #   tool_choice="auto"  (support_agent.live_demo)
+make mcp-demo           # a plain MCP client over the protocol -- no model, no key
+                        #   (support_agent.mcp_client_demo)
+```
+
+`make mcp-demo` needs the `mcp` SDK but no key: it lists and calls the tools over
+the protocol, showing that the same descriptions the router scores are the contract
+every client sees. The server it talks to (`python -m support_agent.server`,
+declared in `.mcp.json`) is what a real MCP client such as Claude Code launches.
 
 ## The headline
 
